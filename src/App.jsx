@@ -1,10 +1,19 @@
 import { Route, Routes, Outlet } from 'react-router-dom';
 import { RegisterPage, LoginPage, LandingPage } from './pages';
 import { Footer, NavBar } from './layout';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Layout() {
   return (
     <div className="flex flex-col h-screen justify-between">
+      <ToastContainer
+        position='bottom-right'
+        theme='light'
+        pauseOnHover={true}
+        autoClose={1500}
+      />
+
       <NavBar />
 
       <main className="mb-auto w-10/12 max-w-4xl mx-auto">
