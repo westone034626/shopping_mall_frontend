@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { RegisterPage, LoginPage, LandingPage } from './pages';
+import { RegisterPage, LoginPage, LandingPage, ProtectedPage } from './pages';
 import { Footer, NavBar } from './layout';
 import { authUser } from './store/thunkFunctions';
+import { ProtectedRoutes, NotAuthRoutes } from './components';
 
 function Layout() {
   return (
@@ -44,8 +45,14 @@ function App() {
       <Route path='/' element={<Layout />}>
         <Route index element={<LandingPage />} />
 
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route element={<ProtectedRoutes isAuth={isAuth} />}>
+          <Route path="/protected" element={<ProtectedPage />} />
+        </Route>
+
+        <Route element={<NotAuthRoutes isAuth={isAuth} />}>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+        </Route>
       </Route>
     </Routes>
   );
