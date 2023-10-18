@@ -1,8 +1,11 @@
-import { Route, Routes, Outlet } from 'react-router-dom';
-import { RegisterPage, LoginPage, LandingPage } from './pages';
-import { Footer, NavBar } from './layout';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Route, Routes, Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { RegisterPage, LoginPage, LandingPage } from './pages';
+import { Footer, NavBar } from './layout';
+import { authUser } from './store/thunkFunctions';
 
 function Layout() {
   return (
@@ -26,6 +29,15 @@ function Layout() {
 }
 
 function App() {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(state => state.user?.isAuth);
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(authUser());
+    }
+  }, [dispatch, isAuth, pathname]);
 
   return (
     <Routes>

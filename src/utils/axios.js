@@ -6,4 +6,13 @@ const axiosInstance = axios.create({
         : 'http://localhost:4000'
 });
 
+axiosInstance.interceptors.request.use(
+    (config) => {
+        config.headers.Authorization = 'Bearer ' + localStorage.getItem('accessToken');
+
+        return config;
+    },
+    (error) => Promise.reject(error)
+);
+
 export default axiosInstance;
