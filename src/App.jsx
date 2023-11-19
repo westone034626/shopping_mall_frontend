@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes, Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { RegisterPage, LoginPage, LandingPage, ProtectedPage } from './pages';
+import { RegisterPage, LoginPage, LandingPage, ProtectedPage, UploadProductPage, HistoryPage, CartPage, DetailProductPage } from './pages';
 import { Footer, NavBar } from './layout';
 import { authUser } from './store/thunkFunctions';
 import { ProtectedRoutes, NotAuthRoutes } from './components';
@@ -47,6 +47,10 @@ function App() {
 
         <Route element={<ProtectedRoutes isAuth={isAuth} />}>
           <Route path="/protected" element={<ProtectedPage />} />
+          <Route path="/product/upload" element={<UploadProductPage />} />
+          <Route path="/protect/:productId" element={<DetailProductPage />} />
+          <Route path="/user/cart" element={<CartPage />} />
+          <Route path="/history" element={<HistoryPage />} />
         </Route>
 
         <Route element={<NotAuthRoutes isAuth={isAuth} />}>
