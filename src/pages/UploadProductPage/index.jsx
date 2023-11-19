@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axiosInstance from '../../utils/axios';
 
 const continents = [
     { key: 1, value: 'Africa' },
@@ -11,15 +15,52 @@ const continents = [
 ];
 
 const UploadProductPage = () => {
-    const handleChange = () => { };
-    const product = {};
+    const navigate = useNavigate();
+    const { userData: user } = useSelector(state => state.user) || {};
+
+    const [product, setProduct] = useState({
+        title: '',
+        description: '',
+        price: 0,
+        continents: 1,
+        images: [],
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        setProduct(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const body = {
+            writer: user._id,
+            ...product,
+        };
+
+        try {
+            await axiosInstance.post('/products', body);
+
+            navigate('/');
+        } catch (error) {
+            toast(error);
+
+            console.error(error);
+        }
+    };
+
     return (
         <section>
             <div className='text-center m-7'>
                 <h1>예상 상품 업로드</h1>
             </div>
 
-            <form className='mt-6'>
+            <form
+                className='mt-6'
+                onSubmit={handleSubmit}
+            >
                 <div className='mt-4'>
                     <label htmlFor='title'>이름</label>
 
