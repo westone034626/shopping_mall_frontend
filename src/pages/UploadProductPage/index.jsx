@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../utils/axios';
+import { FileUpload } from '../../components';
 
 const continents = [
     { key: 1, value: 'Africa' },
@@ -30,6 +31,13 @@ const UploadProductPage = () => {
         const { name, value } = event.target;
 
         setProduct(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleImages = (newImages) => {
+        setProduct(prev => ({
+            ...prev,
+            images: newImages
+        }));
     };
 
     const handleSubmit = async (event) => {
@@ -61,6 +69,11 @@ const UploadProductPage = () => {
                 className='mt-6'
                 onSubmit={handleSubmit}
             >
+                <FileUpload
+                    images={product.images}
+                    onImageChange={handleImages}
+                />
+
                 <div className='mt-4'>
                     <label htmlFor='title'>이름</label>
 
