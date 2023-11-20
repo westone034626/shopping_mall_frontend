@@ -44,7 +44,7 @@ const UploadProductPage = () => {
         event.preventDefault();
 
         const body = {
-            writer: user._id,
+            writer: user.id,
             ...product,
         };
 
