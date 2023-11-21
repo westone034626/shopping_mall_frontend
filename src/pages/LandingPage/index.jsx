@@ -4,6 +4,7 @@ import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
 import SearchInput from './Sections/SearchInput';
 import CardItem from './Sections/CardItem';
+import useDebounce from '../../hooks/useDebounce';
 
 const LandingPage = () => {
     const limit = 4;
@@ -13,14 +14,14 @@ const LandingPage = () => {
     const [filters, setFilters] = useState({
         continents: [],
         price: [],
+        searchTerm: '',
     });
 
-    const fetchProducts = async ({ skip, limit, loadMore = false, filters = {}, searchTerm = '' }) => {
+    const fetchProducts = useDebounce(async ({ skip, limit, loadMore = false, filters = {} }) => {
         const params = {
             skip,
             limit,
             filters,
-            searchTerm,
         };
 
         try {
@@ -35,7 +36,7 @@ const LandingPage = () => {
         } catch (error) {
             console.error(error);
         }
-    };
+    });
 
     useEffect(() => {
         fetchProducts({ limit, skip });
@@ -99,8 +100,11 @@ const LandingPage = () => {
             </div>
 
             {/* Search */}
-            <div className='flex justify-end'>
-                <SearchInput />
+            <div className='flex justify-end mb-3'>
+                <SearchInput
+                    keyword={filters.searchTerm}
+                    onSearch={(newKeyword) => handleFilters(newKeyword, 'searchTerm')}
+                />
             </div>
 
             {/* Card */}
