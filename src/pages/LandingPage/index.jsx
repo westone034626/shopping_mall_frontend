@@ -90,7 +90,11 @@ const LandingPage = () => {
                 </div>
 
                 <div className='w-1/2'>
-                    <RadioBox />
+                    <RadioBox
+                        prices={filterData.prices}
+                        checkedPrice={filters.price}
+                        onFilters={filters => handleFilters(filters, 'price')}
+                    />
                 </div>
             </div>
 
