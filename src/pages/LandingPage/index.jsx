@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axiosInstance from '../../utils/axios';
+import { axiosInstance, filterData } from '../../utils';
 import CheckBox from './Sections/CheckBox';
 import RadioBox from './Sections/RadioBox';
 import SearchInput from './Sections/SearchInput';
@@ -53,6 +53,25 @@ const LandingPage = () => {
         setSkip(skip + limit);
     };
 
+    const handleFilters = (newFilteredData, category) => {
+        const newFilters = { ...filters };
+        newFilters[category] = newFilteredData;
+
+        showFiltersResults(newFilters);
+        setFilters(newFilters);
+    };
+
+    const showFiltersResults = (filters) => {
+        const body = {
+            skip: 0,
+            limit,
+            filters,
+        };
+
+        fetchProducts(body);
+        setSkip(0);
+    };
+
     return (
         <section>
             {/* Title */}
@@ -63,7 +82,11 @@ const LandingPage = () => {
             {/* Filter */}
             <div className='flex gap-3'>
                 <div className='w-1/2'>
-                    <CheckBox />
+                    <CheckBox
+                        continents={filterData.continents}
+                        checkedContinents={filters.continents}
+                        onFilters={filters => handleFilters(filters, 'continents')}
+                    />
                 </div>
 
                 <div className='w-1/2'>
