@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCartDetail } from '../../store/thunkFunctions';
+import CartTable from './Sections/CartTable';
 
 const CartPage = () => {
     const dispatch = useDispatch();
@@ -29,6 +30,10 @@ const CartPage = () => {
         setTotal(newTotal);
     };
 
+    const handleRemoveCartItem = (id) => {
+
+    };
+
     return (
         <section>
             <div className='text-center m-7'>
@@ -36,6 +41,11 @@ const CartPage = () => {
                     나의 장바구니
                 </h2>
             </div>
+
+            <CartTable
+                products={cartDetail}
+                onRemoveItem={handleRemoveCartItem}
+            />
 
             {cartDetail?.length > 0 ? (
                 <>
