@@ -25,6 +25,9 @@ const NavItem = ({ mobile }) => {
         dispatch(logoutUser()).then(() => navigate('/login'));
     };
 
+    const userData = useSelector(state => state.user.userData);
+    const cartIsNotEmpty = userData.cart?.length > 0;
+
     return (
         <ul className={`flex gap-4 ${mobile && 'flex-col items-center'}`}>
             {routes.map(({ name, to, auth, icon }) => {
@@ -41,9 +44,9 @@ const NavItem = ({ mobile }) => {
                                 <>
                                     {icon}
 
-                                    <span className='absolute top-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -right-3'>
-                                        {1}
-                                    </span>
+                                    {cartIsNotEmpty && <span className='absolute top-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -right-3'>
+                                        {userData.cart.length}
+                                    </span>}
                                 </>
                             ) : name}
                         </Link>
