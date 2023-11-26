@@ -10,7 +10,7 @@ const CartPage = () => {
     const [total, setTotal] = useState(0);
 
     useEffect(() => {
-        if (userState?.cart && userState.cart.length > 1) {
+        if (userState?.cart && userState.cart.length > 0) {
             const body = {
                 productIds: userState.cart.map(({ id }) => id).filter(Boolean),
                 cartData: userState.cart,
