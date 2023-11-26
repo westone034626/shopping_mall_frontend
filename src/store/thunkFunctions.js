@@ -104,3 +104,26 @@ export const getCartDetail = createAsyncThunk(
         }
     }
 );
+
+export const removeCartItem = createAsyncThunk(
+    'user/removeCartItem',
+    async (productId, thunkAPI) => {
+        try {
+            const response = await axiosInstance.delete(`/users/cart?productId=${productId}`);
+
+            response.data.productInfo.forEach((product, index) => {
+                response.data.cart.forEach(cart => {
+                    if (cart.id === product._id) {
+                        response.data.productInfo[index].quantity = cart.quantity;
+                    }
+                });
+            });
+
+            return response.data;
+        } catch (error) {
+            console.log(error);
+
+            return thunkAPI.rejectWithValue(error.response.data || error.message);
+        }
+    }
+);

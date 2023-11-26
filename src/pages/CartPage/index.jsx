@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCartDetail } from '../../store/thunkFunctions';
+import { getCartDetail, removeCartItem } from '../../store/thunkFunctions';
 import CartTable from './Sections/CartTable';
 
 const CartPage = () => {
@@ -31,7 +31,7 @@ const CartPage = () => {
     };
 
     const handleRemoveCartItem = (id) => {
-
+        dispatch(removeCartItem(id));
     };
 
     return (
